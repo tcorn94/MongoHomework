@@ -1,6 +1,10 @@
 const express = require("express");
-const mongojs = require("mongojs");
 const logger = require("morgan");
+const mongoose = require("mongoose");
+
+const PORT = process.env.PORT || 3000;
+
+const db = require("./models");
 
 const app = express();
 
@@ -11,11 +15,12 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-const databaseUrl = "notetaker";
-const collections = ["notes"];
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/MongoHomework", { useNewUrlParser: true });
 
-const db = mongojs(databaseUrl, collections);
-
-db.on("error", error => {
-  console.log("Database Error:", error);
-});
+db.Library.create({ name: "Campus Library" })
+  .then(dbLibrary => {
+    console.log(dbLibrary);
+  })
+  .catch(({message}) => {
+    console.log(message);
+  });
