@@ -8,6 +8,9 @@ const db = require("./models");
 
 const app = express();
 
+const api = require("./routes/apiRoutes");
+const html = require("./routes/htmlRoutes");
+
 app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
@@ -15,12 +18,5 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/MongoHomework", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
-db.Library.create({ name: "Campus Library" })
-  .then(dbLibrary => {
-    console.log(dbLibrary);
-  })
-  .catch(({message}) => {
-    console.log(message);
-  });

@@ -1,6 +1,6 @@
 // /api/workouts get read all
-app.get("/books", (req, res) => {
-    db.Book.find({})
+app.get("/api/workouts", (req, res) => {
+    db.workout.find({})
       .then(dbBook => {
         res.json(dbBook);
       })
@@ -9,10 +9,9 @@ app.get("/books", (req, res) => {
       });
   });
   
-
 //post /api/workouts create workout doc
-app.post("/submit", ({body}, res) => {
-    db.User.create({ name: "Ernest Hemingway" })
+app.post("/api/workouts", ({body}, res) => {
+    db.workout.create({ name: "Ernest Hemingway" })
     .then(dbUser => {
       console.log(dbUser);
     })
@@ -21,9 +20,9 @@ app.post("/submit", ({body}, res) => {
     })});
 
 //update /api/workouts/:id to update add exercise
-app.post("/submit", ({ body }, res) => {
-    db.Note.create(body)
-      .then(({ _id }) => db.User.findOneAndUpdate({}, { $push: { notes: _id } }, { new: true }))
+app.post("/api/workouts/:id", ({ body }, res) => {
+    db.workout.create(body)
+      .then(({ _id }) => db.workout.findOneAndUpdate({}, { $push: { notes: _id } }, { new: true }))
       .then(dbUser => {
         res.json(dbUser);
       })
@@ -33,8 +32,8 @@ app.post("/submit", ({ body }, res) => {
   });
 
 //get /api/workouts/range to read last 7 docs
-app.get("/user", (req, res) => {
-    db.User.find({})
+app.get("/api/workouts/range", (req, res) => {
+    db.workout.find({})
       .then(dbUser => {
         res.json(dbUser);
       })
