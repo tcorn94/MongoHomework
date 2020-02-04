@@ -1,17 +1,18 @@
-// home page / index html
-const express = require("express");
-const app = express();
+const path = require("path");
+
+module.exports = function(app){
 
 app.get("/", (req, res) => {
-    res.send(index.html);
+    res.sendFile(path.join(__dirname + '../../public/index.html'))
   });
 
 ///exercise.html 
 app.get("/exercise", (req, res) => {
-    res.send(exercise.html);
+  res.sendFile(path.join(__dirname + '../../public/exercise.html'))
   });
 
 //stats.html stats 
 app.get("/stats", (req, res) => {
-    res.send(stats.html);
+  res.sendFile(path.join(__dirname + '../../public/stats.html'))
   });
+}

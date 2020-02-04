@@ -1,14 +1,9 @@
-const express = require("express");
-const mongoose = require("mongoose");
 
-const app = express();
-
-const woSchema = require("../models/workout");
-
-const exercise = mongoose.model("workout", woSchema);
+const exercise = require("../models/workout");
 
 // /api/workouts get read all
 
+module.exports = function(app){
 
 app.get("/api/workouts", (req, res) => {
 
@@ -69,3 +64,5 @@ app.get("/api/workouts/range", (req, res) => {
   });
 
 })
+
+}

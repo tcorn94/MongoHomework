@@ -8,8 +8,8 @@ const db = require("./models");
 
 const app = express();
 
-const api = require("./routes/apiRoutes");
-const html = require("./routes/htmlRoutes");
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
 app.use(logger("dev"));
 
@@ -19,4 +19,8 @@ app.use(express.json());
 app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true ,  useFindAndModify: false});
+
+app.listen(PORT, function(){
+    console.log("Connected on port: " + PORT)
+})
 
