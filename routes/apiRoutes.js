@@ -11,49 +11,61 @@ const exercise = mongoose.model("workout", woSchema);
 
 
 app.get("/api/workouts", (req, res) => {
-   
-    exercise.find({})
-      .then(dbexercise => {
-        res.json(dbexercise);
-      })
-      .catch(err => {
-        res.json(err);
-      });
+
+  exercise.find({}, function (err, dbexercise) {
+    if (err) {
+      res.json(err);
+    }
+    else { res.json(dbexercise) };
+
   });
-  
+})
+
 //post /api/workouts create workout doc
-app.post("/api/workouts", ({body}, res) => {
-    exercise.create(body)
-    .then(dbexercise => {
-      console.log(dbexercise);
-    })
-    .catch(({ message }) => {
-      console.log(message);
-    })});
+app.post("/api/workouts", ({ body }, res) => {
+
+  exercise.create(body), function (err, dbexercise) {
+    if (err) {
+      throw error;
+    }
+    else {
+      res.json(dbexercise)
+    }
+  }
+});
 
 //update /api/workouts/:id to update add exercise
 app.post("/api/workouts/:id", ({ body }, res) => {
-    db.workout.create(body)
-      .then(({ _id }) => db.workout.findOneAndUpdate({}, { $push: { workout: _id } }, { new: true }))
-      .then(dbexercise => {
-        res.json(dbexercise);
-      })
-      .catch(err => {
-        res.json(err);
-      });
-  });
+
+  exercise.findOneAndUpdate({ "_id": body.id }, body, { upsert: true }, function (err, docs) {
+    if (err) {
+      throw error;
+    }
+    else {
+      res.json(docs)
+    }
+
+  })
+})
+
 
 // get /api/workouts/range to read last 7 docs
 app.get("/api/workouts/range", (req, res) => {
-    exercise.find({
-      day: {
-        $gte: new Date().setDate(new Date().getDate()-7),
-        $lte: new Date().setDate(new Date().getDate()-1)
-      }
-      .then(dbexercise => {
-        res.json(dbexercise);
-      })
-      .catch(err => {
-        res.json(err);
-      }),
-  })})
+
+  exercise.find({
+    day: {
+      $gte: new Date().setDate(new Date().getDate() - 7),
+      $lte: new Date().setDate(new Date().getDate() - 1)
+    }
+  }, function (err, docs) {
+    if (err) {
+      throw error;
+    }
+    else {
+      res.json(docs)
+
+    }
+
+  });
+
+})
