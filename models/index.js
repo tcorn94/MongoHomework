@@ -1,8 +1,7 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
+// const Schema = mongoose.Schema;
 
+// const workout = mongoose.model("Example", workout);
 
-const workout = mongoose.model("Example", workout);
-
-module.exports = workout;
+// module.exports = workout;

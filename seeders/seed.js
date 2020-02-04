@@ -1,9 +1,12 @@
 let mongoose = require("mongoose");
 let db = require("../models");
+let woSchema = require("../models/workout");
+const exercise = mongoose.model("workout", woSchema);
 
-mongoose.connect("mongodb://localhost/workout", {
+mongoose.connect("mongodb://localhost/mongohomework", {
   useNewUrlParser: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useUnifiedTopology: true
 });
 
 let workoutSeed = [
@@ -135,8 +138,8 @@ let workoutSeed = [
   }
 ];
 
-db.Workout.deleteMany({})
-  .then(() => db.Workout.collection.insertMany(workoutSeed))
+exercise.deleteMany({})
+  .then(() => exercise.collection.insertMany(workoutSeed))
   .then(data => {
     console.log(data.result.n + " records inserted!");
     process.exit(0);
