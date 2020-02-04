@@ -1,13 +1,15 @@
 
 
 const exercise = require("../models/workout");
-
+const bodyParser = require('body-parser');
 // /api/workouts get read all
 
 module.exports = function(app){
+  app.use(bodyParser.json())
 
+  app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/api/workouts", (req, res) => {
-
+  app.use(bodyParser.json())
   exercise.find({}, function (err, dbexercise) {
     if (err) {
       res.json(err);
@@ -18,9 +20,14 @@ app.get("/api/workouts", (req, res) => {
 })
 
 //post /api/workouts create workout doc
-app.post("/api/workouts", ({ body }, res) => {
+app.post("/api/workouts", (body, res) => {
 
-  exercise.create(body), function (err, dbexercise) {
+  //console.log(body.body.todo)
+  console.log(body.body);
+  
+
+
+  exercise.create(body.body), function (err, dbexercise) {
     if (err) {
       throw error;
     }
@@ -31,9 +38,9 @@ app.post("/api/workouts", ({ body }, res) => {
 });
 
 //update /api/workouts/:id to update add exercise
-app.post("/api/workouts/:id", ({ body }, res) => {
+app.put("/api/workouts/:id", (body , res) => {
 
-  exercise.findOneAndUpdate({ "_id": body.id }, body, { upsert: true }, function (err, docs) {
+  exercise.findOneAndUpdate({ "_id": body.body._id }, body.body, { upsert: true }, function (err, docs) {
     if (err) {
       throw error;
     }
