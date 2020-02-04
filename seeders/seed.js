@@ -1,7 +1,9 @@
 let mongoose = require("mongoose");
 let db = require("../models");
-let woSchema = require("../models/workout");
-const exercise = mongoose.model("workout", woSchema);
+// let woSchema = require("../models/workout");
+// const exercise = mongoose.model("workout", woSchema);
+const exercise = require("../models/workout");
+
 
 mongoose.connect("mongodb://localhost/workout", {
   useNewUrlParser: true,
@@ -128,7 +130,7 @@ let workoutSeed = [
     day: new Date().setDate(new Date().getDate()-1),
     exercises: [
       {
-        type: "resistance",
+        type: "cardio",
         name: "Bench",
         duration: 30,
         distance: 2
